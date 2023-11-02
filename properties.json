@@ -1,0 +1,9 @@
+﻿{
+  "QueueConsumer": {
+    "Host": "",
+    "VPNName": "",
+    "Username": "",
+    "Password": "",
+    "QueueName": ""
+  }
+}
