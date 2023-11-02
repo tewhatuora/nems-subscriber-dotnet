@@ -2,13 +2,26 @@
 
 A simple Solace queue consumer written using .NET 7.
 
-### Requirements
-Docker
+### Installation Instructions (Docker)
 
-### Installation Instructions
+#### Requirements:
+ - Docker
 
-
-1. Modify the `properties.json` file and set the Host, VPNName, UserName, Password, and QueueName settings.
-2. Run `docker-compose up` in the root folder.
+#### Installation:
+1. Clone this repo into a folder of your choice.
+2. Modify the `properties.json` file and set the Host, VPNName, UserName, Password, and QueueName settings.
+3. Run `docker-compose up` in the root folder.
 
 The application should install itself and start up. Once started it will connect to the Solace instance and start listening on the specified queue. Once a message is sent to the queue the consumer will pick it up and should display the message contents to the terminal.
+
+### Installation Instructions (Visual Studio)
+#### Requirements:
+ - .NET Version 7.0
+ - Visual Studio 2022
+
+ #### Installation:
+ 1. Clone this repo into a folder of your choice.
+ 2. Copy the ```requirements.json``` into the source folder 
+ 3. Open the .sln file with Visual Studio
+ 4. Select the ```source/requirements.json``` file and under the Properties panel set ```Copy to Output``` to ```Copy if newer```
+ 5. Open the ```requirements.json``` file and set the Host, VPNName, UserName, Password, and QueueName settings
