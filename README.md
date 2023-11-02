@@ -1,6 +1,6 @@
 # .NET Solace Queue Consumer Demo
 
-A simple Solace queue consumer written using .NET 7.
+This is a simple Solace queue consumer console app written using .NET 7. If an error occurs the stacktrace will be printed to the console.
 
 ### Installation Instructions (Docker)
 
