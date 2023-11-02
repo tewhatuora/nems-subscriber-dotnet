@@ -25,9 +25,11 @@ try
 using var loggerFactory = LoggerFactory.Create(
     builder => builder.AddConsole());
 
-using var config = new SolaceConfig();
 using var consumer = new QueueConsumer(loggerFactory.CreateLogger<QueueConsumer>());
-consumer.Run(settings, config);
+
+using var config = new SolaceConfig();
+using var context = config.CreateContext();
+consumer.Run(settings, context);
 
 #if (!DEBUG)
 }

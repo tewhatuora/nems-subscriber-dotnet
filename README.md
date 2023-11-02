@@ -1,6 +1,6 @@
 # .NET Solace Queue Consumer Demo
 
-A simple Solace queue consumer written using .NET 7.
+This is a simple Solace queue consumer console app written using .NET 7. If an error occurs the stacktrace will be printed to the console.
 
 ### Installation Instructions (Docker)
 
@@ -10,7 +10,7 @@ A simple Solace queue consumer written using .NET 7.
 #### Installation:
 1. Clone this repo into a folder of your choice.
 2. Modify the `properties.json` file and set the Host, VPNName, UserName, Password, and QueueName settings.
-3. Run `docker-compose up` in the root folder.
+3. Run `docker-compose up --build` in the root folder.
 
 The application should install itself and start up. Once started it will connect to the Solace instance and start listening on the specified queue. Once a message is sent to the queue the consumer will pick it up and should display the message contents to the terminal.
 

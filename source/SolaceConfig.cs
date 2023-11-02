@@ -4,9 +4,7 @@ namespace SparkHealthSolace;
 
 public class SolaceConfig
     : IDisposable
-{
-    private readonly IContext _context;
-
+{ 
     public SolaceConfig()
     {
         var properties = new ContextFactoryProperties
@@ -14,18 +12,18 @@ public class SolaceConfig
             SolClientLogLevel = SolLogLevel.Warning,
         };
         properties.LogToConsoleError();
-        ContextFactory.Instance.Init(properties);
 
-        _context = ContextFactory.Instance.CreateContext(new ContextProperties(), null);
+        ContextFactory.Instance.Init(properties);
     }
 
-    public IContext Context => _context;
+    public IContext CreateContext()
+    {
+        var context = ContextFactory.Instance.CreateContext(new ContextProperties(), null); 
+        return context;
+    }
 
     public void Dispose()
     {
-        _context.Dispose();
-        
-        // Should only be run at end of program.
         ContextFactory.Instance.Cleanup();
     }
 }

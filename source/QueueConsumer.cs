@@ -20,11 +20,11 @@ public class QueueConsumer
         _eventWaitHandle = new AutoResetEvent(false);
     }
 
-    public void Run(QueueConsumerSettings settings, SolaceConfig config)
+    public void Run(QueueConsumerSettings settings, IContext context)
     {
         // Validate inputs
         ArgumentNullException.ThrowIfNull(settings, nameof(settings));
-        ArgumentNullException.ThrowIfNull(config, nameof(config));
+        ArgumentNullException.ThrowIfNull(context, nameof(context));
 
         settings.Validate();
 
@@ -41,7 +41,7 @@ public class QueueConsumer
         // Connect to Solace.
         _logger.LogInformation("Connecting as {username}@{vpnName} on {host}...", settings.Username, settings.VPNName, settings.Host);
 
-        _session = config.Context.CreateSession(sessionProperties, null, null);
+        _session = context.CreateSession(sessionProperties, null, null);
 
         var result = _session.Connect();
         if (result is not ReturnCode.SOLCLIENT_OK)
