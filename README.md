@@ -1,4 +1,4 @@
-# Solace QueueConsumer DotNet Demo
+# .NET Solace Queue Consumer Demo
 
 A simple Solace queue consumer written using .NET 7.
 
@@ -24,4 +24,4 @@ The application should install itself and start up. Once started it will connect
  2. Copy the ```requirements.json``` into the source folder 
  3. Open the .sln file with Visual Studio
  4. Select the ```source/requirements.json``` file and under the Properties panel set ```Copy to Output``` to ```Copy if newer```
- 5. Open the ```requirements.json``` file and set the Host, VPNName, UserName, Password, and QueueName settings
+ 5. Open the ```source/requirements.json``` file and set the Host, VPNName, UserName, Password, and QueueName settings
