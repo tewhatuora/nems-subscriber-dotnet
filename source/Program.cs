@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using SparkHealthSolace;
+using GuaranteedSubscriber;
 
 var configuration = new ConfigurationBuilder()
     .AddJsonFile("properties.json")
@@ -25,9 +25,10 @@ try
 using var loggerFactory = LoggerFactory.Create(
     builder => builder.AddConsole());
 
+
 using var consumer = new QueueConsumer(loggerFactory.CreateLogger<QueueConsumer>());
 
-using var config = new SolaceConfig();
+using var config = new SolaceConfig(loggerFactory.CreateLogger<SolaceConfig>());
 using var context = config.CreateContext();
 consumer.Run(settings, context);
 

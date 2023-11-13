@@ -1,4 +1,6 @@
-﻿namespace SparkHealthSolace;
+﻿using SolaceSystems.Solclient.Messaging;
+
+namespace GuaranteedSubscriber;
 
 public class QueueConsumerSettings
 {
@@ -9,7 +11,7 @@ public class QueueConsumerSettings
     public required string QueueName { get; set; }
     public int DefaultReconnectRetries { get; set; } = 3;
 
-    public void Validate()
+    public SessionProperties ToSessionProperties()
     {
         ArgumentException.ThrowIfNullOrEmpty(Host, nameof(Host));
         ArgumentException.ThrowIfNullOrEmpty(VPNName, nameof(VPNName));
@@ -22,5 +24,16 @@ public class QueueConsumerSettings
             throw new ArgumentException($"{nameof(DefaultReconnectRetries)} cannot be less than 0.");
         }
 
+        var properties = new SessionProperties
+        {
+            Host = Host,
+            VPNName = VPNName,
+            UserName = Username,
+            Password = Password,
+            ReconnectRetries = DefaultReconnectRetries,
+            SSLValidateCertificate = false,
+        };
+
+        return properties;
     }
 }

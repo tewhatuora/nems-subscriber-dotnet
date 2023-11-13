@@ -1,18 +1,23 @@
-﻿using SolaceSystems.Solclient.Messaging;
+﻿using Microsoft.Extensions.Logging;
+using SolaceSystems.Solclient.Messaging;
 
-namespace SparkHealthSolace;
+namespace GuaranteedSubscriber;
 
 public class SolaceConfig
     : IDisposable
-{ 
-    public SolaceConfig()
+{
+    private readonly ILogger _logger;
+
+    public SolaceConfig(ILogger logger)
     {
+        _logger = logger;
+
         var properties = new ContextFactoryProperties
         {
             SolClientLogLevel = SolLogLevel.Warning,
+            LogDelegate = LogDelegate,
         };
-        properties.LogToConsoleError();
-
+        
         ContextFactory.Instance.Init(properties);
     }
 
@@ -25,5 +30,10 @@ public class SolaceConfig
     public void Dispose()
     {
         ContextFactory.Instance.Cleanup();
+    }
+
+    private void LogDelegate(SolLogInfo logInfo)
+    {
+        _logger.Log(logInfo.LogLevel.ToExtensionsLogLevel(), logInfo.LogException, logInfo.LogMessage); ;
     }
 }

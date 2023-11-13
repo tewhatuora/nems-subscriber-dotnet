@@ -2,7 +2,7 @@
 using SolaceSystems.Solclient.Messaging;
 using System.Text;
 
-namespace SparkHealthSolace;
+namespace GuaranteedSubscriber;
 
 public class QueueConsumer
     : IDisposable
@@ -26,20 +26,24 @@ public class QueueConsumer
         ArgumentNullException.ThrowIfNull(settings, nameof(settings));
         ArgumentNullException.ThrowIfNull(context, nameof(context));
 
-        settings.Validate();
+        var sessionProperties = settings.ToSessionProperties();
+        
+        InternalRun(sessionProperties, settings.QueueName, context);
+    }
 
-        var sessionProperties = new SessionProperties
-        {
-            Host = settings.Host,
-            VPNName = settings.VPNName,
-            UserName = settings.Username,
-            Password = settings.Password,
-            ReconnectRetries = settings.DefaultReconnectRetries,
-            SSLValidateCertificate = false,
-        };
+    public void Run(SessionProperties properties, string queueName, IContext context)
+    {
+        // Validate inputs
+        ArgumentNullException.ThrowIfNull(properties, nameof(properties));
+        ArgumentNullException.ThrowIfNull(context, nameof(context));
 
+        InternalRun(properties, queueName, context);
+    }
+
+    private void InternalRun(SessionProperties sessionProperties, string queueName, IContext context)
+    {
         // Connect to Solace.
-        _logger.LogInformation("Connecting as {username}@{vpnName} on {host}...", settings.Username, settings.VPNName, settings.Host);
+        _logger.LogInformation("Connecting as {username}@{vpnName} on {host}...", sessionProperties.UserName, sessionProperties.VPNName, sessionProperties.Host);
 
         _session = context.CreateSession(sessionProperties, null, null);
 
@@ -53,8 +57,8 @@ public class QueueConsumer
         _logger.LogInformation("Successfully connected to Solace!");
 
         // Attempt to connect to the specified queue.
-        _logger.LogInformation("Attempting to connect to queue '{queueName}'", settings.QueueName);
-        _queue = ContextFactory.Instance.CreateQueue(settings.QueueName);
+        _logger.LogInformation("Attempting to connect to queue '{queueName}'", queueName);
+        _queue = ContextFactory.Instance.CreateQueue(queueName);
 
         var flowProperties = new FlowProperties
         {
@@ -68,12 +72,15 @@ public class QueueConsumer
         }
         catch (Exception ex)
         {
-            throw new Exception($"Failed to connect to queue '{settings.QueueName}', does queue exist?", ex);
+            throw new Exception($"Failed to connect to queue '{queueName}', does queue exist?", ex);
         }
 
-        _logger.LogInformation("Waiting for message in queue '{queueName}'...", settings.QueueName);
+        while (true)
+        {
+            _logger.LogInformation("Waiting for message in queue '{queueName}'...", queueName);
 
-        _eventWaitHandle.WaitOne();
+            _eventWaitHandle.WaitOne();
+        }
     }
 
     private void HandleMessageEvent(object? source, MessageEventArgs args)
