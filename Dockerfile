@@ -4,9 +4,9 @@ WORKDIR /App
 # Copy everything
 COPY source/ ./
 # Restore as distinct layers
-RUN dotnet restore
+RUN dotnet restore GuaranteedSubscriber.csproj
 # Build and publish a release
-RUN dotnet publish -c Release -o out
+RUN dotnet publish GuaranteedSubscriber.csproj -c Release -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
@@ -15,4 +15,4 @@ COPY --from=build-env /App/out .
 
 # Finally bring in properties
 COPY properties.json ./
-ENTRYPOINT ["dotnet", "SparkHealthSolace.dll"]
+ENTRYPOINT ["dotnet", "GuaranteedSubscriber.dll"]

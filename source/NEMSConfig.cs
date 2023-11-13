@@ -3,12 +3,12 @@ using SolaceSystems.Solclient.Messaging;
 
 namespace GuaranteedSubscriber;
 
-public class SolaceConfig
+public class NEMSConfig
     : IDisposable
 {
     private readonly ILogger _logger;
 
-    public SolaceConfig(ILogger logger)
+    public NEMSConfig(ILogger logger)
     {
         _logger = logger;
 

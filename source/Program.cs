@@ -28,7 +28,7 @@ using var loggerFactory = LoggerFactory.Create(
 
 using var consumer = new QueueConsumer(loggerFactory.CreateLogger<QueueConsumer>());
 
-using var config = new SolaceConfig(loggerFactory.CreateLogger<SolaceConfig>());
+using var config = new NEMSConfig(loggerFactory.CreateLogger<NEMSConfig>());
 using var context = config.CreateContext();
 consumer.Run(settings, context);
 
