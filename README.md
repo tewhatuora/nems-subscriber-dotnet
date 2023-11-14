@@ -1,4 +1,4 @@
-# .NET NEMS Queue Consumer Demo
+# NEMS Guaranteed Subscriber .NET
 
 This is a simple NEMS queue consumer console app written using .NET 7. If an error occurs the stacktrace will be printed to the console.
 
