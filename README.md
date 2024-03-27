@@ -34,4 +34,5 @@ The application should install itself and start up. Once started it will connect
 1.  Clone this repo into a folder of your choice.
 2.  Move the `properties.json` into the source folder
 3.  Open the `source/properties.json` file. Replace the PLACEHOLDER variables to meet your connection details.
-4.  To run the application, make sure
+4.  To run the application, make sure you are in the `source` directory run the command
+    `dotnet run`
