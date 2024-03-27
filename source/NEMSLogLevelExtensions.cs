@@ -3,7 +3,7 @@ using SolaceSystems.Solclient.Messaging;
 
 namespace GuaranteedSubscriber;
 
-internal static class SolLogLevelExtensions
+internal static class NEMSLogLevelExtensions
 {
     public static LogLevel ToExtensionsLogLevel(this SolLogLevel level)
     {

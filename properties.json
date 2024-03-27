@@ -1,9 +1,17 @@
 ﻿{
-  "QueueConsumer": {
-    "Host": "",
-    "VPNName": "",
-    "Username": "",
-    "Password": "",
-    "QueueName": ""
+  "NEMSProperties": {
+    "Host": "PLACEHOLDER",
+    "VPNName": "PLACEHOLDER",
+    "QueueName": "PLACEHOLDER",
+    "ReconnectRetries" : 3,
+    "ConnectionType" : "OAUTH"
+  },
+  "OAuthCredentials": {
+    "TokenServer" : "https://login.microsoftonline.com/bed4da51-3cdb-4d0d-baf8-fb80d53268e3/oauth2/v2.0/token",
+    "ClientId" : "PLACEHOLDER",
+    "ClientSecret" : "PLACEHOLDER",
+    "Scope" : "PLACEHOLDER",
+    "Issuer" : "https://sts.windows.net/bed4da51-3cdb-4d0d-baf8-fb80d53268e3/"
   }
+
 }
