@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 properties.json
+GuaranteedSubscriberTest*
