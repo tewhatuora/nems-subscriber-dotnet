@@ -42,7 +42,7 @@ The application should install itself and start up. Once started it will connect
 
 A sample test unit has been created to help test your backend code.
 
-| Test              | Description                                                     |
-| ----------------- | --------------------------------------------------------------- |
-| TestMockMessage   | Simple Mock to test message is populated successfully           |
-| TestNEMSSimulator | Mocked life like Death Notice event which invokes backend logic |
+| `Test`              | `Description`                                                     |
+| ------------------- | ----------------------------------------------------------------- |
+| `TestMockMessage`   | `Simple Mock to test message is populated successfully`           |
+| `TestNEMSSimulator` | `Mocked life like Death Notice event which invokes backend logic` |
