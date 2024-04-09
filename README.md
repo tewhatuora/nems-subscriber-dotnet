@@ -37,3 +37,12 @@ The application should install itself and start up. Once started it will connect
 4.  To run the application, make sure you are in the `source` directory run the command
 
     `dotnet run`
+
+# NEMS Testing
+
+A sample test unit has been created to help test your backend code.
+
+| `Test`              | `Description`                                                     |
+| ------------------- | ----------------------------------------------------------------- |
+| `TestMockMessage`   | `Simple Mock to test message is populated successfully`           |
+| `TestNEMSSimulator` | `Mocked life like Death Notice event which invokes backend logic` |

@@ -24,6 +24,7 @@ public class EventLoader
         {
             _logger.LogInformation("Message topic: {content}", message.Destination.Name);
             _logger.LogInformation("Message content: {content}", Encoding.ASCII.GetString(message.BinaryAttachment));
+            _logger.LogInformation("Header source: {header}", message.UserPropertyMap.GetString("source"));
             _logger.LogInformation("Test: {details}", message.ADMessageId);
         }
         catch (Exception ex)
