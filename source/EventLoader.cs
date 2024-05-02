@@ -2,6 +2,7 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using SolaceSystems.Solclient.Messaging;
+using SolaceSystems.Solclient.Messaging.SDT;
 
 namespace GuaranteedSubscriber;
 public class EventLoader
@@ -28,10 +29,11 @@ public class EventLoader
             string time = message.UserPropertyMap?.GetString("time") ?? throw new ArgumentNullException("time", "Invalid message, the property 'time' cannot be NULL.");
             ArgumentNullException.ThrowIfNull(message.BinaryAttachment, "Message has no payload");
 
-            JsonDocument.Parse(Encoding.UTF8.GetString(message.BinaryAttachment));
+            //JsonDocument.Parse(Encoding.UTF8.GetString(message.BinaryAttachment));
+            JsonDocument.Parse(SDTUtils.GetText(message));
 
             _logger.LogInformation("Message topic: {content}", message.Destination.Name);
-            _logger.LogInformation("Message content: {content}", Encoding.UTF8.GetString(message.BinaryAttachment));
+            _logger.LogInformation("Message content: {content}", SDTUtils.GetText(message));
             _logger.LogInformation("Header source: {header}", message.UserPropertyMap.GetString("source"));
             _logger.LogInformation("Test: {details}", message.ADMessageId);
         }
