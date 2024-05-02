@@ -31,7 +31,7 @@ public class EventLoader
             JsonDocument.Parse(Encoding.UTF8.GetString(message.BinaryAttachment));
 
             _logger.LogInformation("Message topic: {content}", message.Destination.Name);
-            _logger.LogInformation("Message content: {content}", message.BinaryAttachment.ToString());
+            _logger.LogInformation("Message content: {content}", Encoding.UTF8.GetString(message.BinaryAttachment));
             _logger.LogInformation("Header source: {header}", message.UserPropertyMap.GetString("source"));
             _logger.LogInformation("Test: {details}", message.ADMessageId);
         }
