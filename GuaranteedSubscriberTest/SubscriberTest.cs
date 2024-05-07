@@ -62,9 +62,8 @@ namespace GuaranteedSubscriberTest
 
             mockMessage.Setup(m => m.Destination).Returns(mockDestination.Object);
             mockMessage.Setup(m => m.UserPropertyMap).Returns(mockUserPropertyMap.Object);
-            mockMessage.Setup(m => m.BinaryAttachment).Returns(mockPayload);
-            mockMessage.Setup(m => m.HttpContentType).Returns("application/json");
-            // mockMessage.Setup(m => m.HttpContentEncoding).Returns("br");
+            mockMessage.Setup(m => m.BinaryAttachment).Returns(mockPayloadBytes);
+
 
             new EventLoader().ProcessEvent(mockMessage.Object);
 

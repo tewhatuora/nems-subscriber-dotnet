@@ -29,7 +29,6 @@ public class EventLoader
             string time = message.UserPropertyMap?.GetString("time") ?? throw new ArgumentNullException("time", "Invalid message, the property 'time' cannot be NULL.");
             ArgumentNullException.ThrowIfNull(message.BinaryAttachment, "Message has no payload");
 
-            //JsonDocument.Parse(Encoding.UTF8.GetString(message.BinaryAttachment));
             JsonDocument.Parse(SDTUtils.GetText(message));
 
             _logger.LogInformation("Message topic: {content}", message.Destination.Name);
