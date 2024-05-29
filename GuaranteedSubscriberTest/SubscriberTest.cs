@@ -48,9 +48,7 @@ namespace GuaranteedSubscriberTest
             var mockDestination = new Mock<IDestination>();
             var mockUserPropertyMap = new Mock<IMapContainer>();
             var mockMessage = new Mock<IMessage>();
-            byte[] mockPayloadBytes = Encoding.UTF8.GetBytes("{\"callbackUrl\": \"https://api.hip-uat.digital.health.nz/fhir/nhi/v1/Patient/ZAT2348\", \"deathDate\": \"2016-02-18\"}");
-            sbyte[] mockPayload = Array.ConvertAll(mockPayloadBytes, b => (sbyte)b);
-
+            byte[] mockPayload = Encoding.UTF8.GetBytes("{\"callbackUrl\": \"https://api.hip-uat.digital.health.nz/fhir/nhi/v1/Patient/ZAT2348\", \"deathDate\": \"2016-02-18\"}");
 
             mockDestination.Setup(d => d.Name).Returns("demographics/patient/death/new/0.1.0/G00036-D/2203/FZZ988-H/ZAT2348");
             mockUserPropertyMap.Setup(p => p.GetString("source")).Returns("https://hip.uat.digital.health.nz");
@@ -65,6 +63,7 @@ namespace GuaranteedSubscriberTest
             mockMessage.Setup(m => m.Destination).Returns(mockDestination.Object);
             mockMessage.Setup(m => m.UserPropertyMap).Returns(mockUserPropertyMap.Object);
             mockMessage.Setup(m => m.BinaryAttachment).Returns(mockPayloadBytes);
+
 
             new EventLoader().ProcessEvent(mockMessage.Object);
 

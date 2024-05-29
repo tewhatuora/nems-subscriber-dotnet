@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SolaceSystems.Solclient.Messaging;
-using System.Text;
 
 namespace GuaranteedSubscriber;
 
@@ -67,6 +66,8 @@ public class InitConsumer : IDisposable
         var flowProperties = new FlowProperties
         {
             AckMode = MessageAckMode.ClientAck,
+            RequiredOutcomeFailed = true,
+            RequiredOutcomeRejected = true
         };
 
         try
@@ -92,9 +93,27 @@ public class InitConsumer : IDisposable
 
         using var message = args.Message;
 
-        new EventLoader().ProcessEvent(message);
+        try
+        {
+            new EventLoader().ProcessEvent(message);
+            _flow?.Settle(message.ADMessageId, MessageOutcome.Accepted);
+        }
+        catch (Exception ex)
+        {
 
-        _flow?.Ack(message.ADMessageId);
+            if (ex?.Message == "FAILED")
+            {
+                _logger.LogInformation("Message : " + message.ADMessageId + " has FAILED and placed back on the queue for reprocessing");
+                _flow?.Settle(message.ADMessageId, MessageOutcome.Failed);
+            }
+            else
+            {
+                _logger.LogInformation("Message : " + message.ADMessageId + " has been REJECTED and dropped form the queue");
+                _flow?.Settle(message.ADMessageId, MessageOutcome.Rejected);
+            }
+
+        }
+
         _eventWaitHandle.Set();
     }
 
